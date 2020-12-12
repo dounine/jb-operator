@@ -19,12 +19,11 @@ module.exports = {
         },
         before: require('./mock/mock.js')
     },
-    publicPath: `http://localhost:${port}/operator`,
     configureWebpack: {
         output: {
             library: `${name}`,
             libraryTarget: 'umd',
         }
     },
-    publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
+    publicPath: process.env.NODE_ENV === 'production' ? './' : `/`
 }

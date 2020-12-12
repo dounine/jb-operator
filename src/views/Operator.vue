@@ -47,7 +47,7 @@
             <el-col :span="12">
               <el-row justify="end" type="flex">
                 <el-col :span="4">
-                  <router-link :to="`/operator/${platform}/${item.name}/quarter/buy/open`"
+                  <router-link :to="`/${platform}/${item.name}/quarter/buy/open`"
                     ><el-button icon="el-icon-s-operation" circle></el-button
                   ></router-link>
                   <!-- <router-link to="/operator/virtual"><el-button icon="el-icon-s-operation" circle></el-button></router-link> -->

@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import installElementPlus from './plugins/element.js'
 import axios from './plugins/axios'
+import './plugins/public-path.js'
 
 let app: any = null
 const render = (props) => {

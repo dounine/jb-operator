@@ -4,7 +4,7 @@ import Handler from '../views/handle/Handler.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/operator/:platform',
+    path: '/:platform',
     name: 'Operator',
     component: Operator,
     children: [
@@ -15,11 +15,11 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
-  { path: '/operator', redirect: "/operator/virtual" }
+  { path: '', redirect: "/virtual" }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/operator'),
   routes
 })
 
