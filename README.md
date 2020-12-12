@@ -1,2 +1,4 @@
+![](https://github.com/dounine/jb-operator/workflows/Node.js%20CI/badge.svg) ![](https://img.shields.io/github/license/dounine/jb-operator)
+
 # jb-operator
-for jb-base
+compoment for jb-base
