@@ -1,19 +1,22 @@
 <template>
   <router-view :key="$route.path" />
-  <div v-loading="loading" element-loading-text="正在查询..." element-loading-spinner="el-icon-loading" >
+  <div>
     <div class="operator-box" v-if="render">
       <div class="operator-title">
         <span class="operator-title-name">Operator list</span>
       </div>
       <div class="operator-divider"></div>
       <div class="operator-content">
-        <div class="operator-item" v-for="item in positions" :key="item.name">
+        <div
+          class="operator-item"
+          v-for="item in $store.state.positions"
+          :key="item.name"
+        >
           <el-row type="flex" align="middle">
             <el-col :span="12">
               <el-row type="flex" align="middle">
                 <el-col :span="3">
                   <el-row type="flex" justify="center" align="middle">
-                    <!-- <img class="iconName" :src="'../assets/images/'+item.name.toLocaleLowerCase()+'.svg'" :alt="item.name" /> -->
                     <img class="iconName" :src="item.icon" :alt="item.name" />
                   </el-row>
                 </el-col>
@@ -47,7 +50,7 @@
             <el-col :span="12">
               <el-row justify="end" type="flex">
                 <el-col :span="4">
-                  <router-link :to="`/${platform}/${item.name}/quarter/buy/open`"
+                  <router-link :to="`/${platform}/${item.name}/${item.contractTypes[0].value}/${item.directions[0].value}/open`"
                     ><el-button icon="el-icon-s-operation" circle></el-button
                   ></router-link>
                   <!-- <router-link to="/operator/virtual"><el-button icon="el-icon-s-operation" circle></el-button></router-link> -->
@@ -59,13 +62,16 @@
       </div>
     </div>
   </div>
+  <div
+    v-if="loading"
+    v-loading="true"
+    element-loading-text="正在查询..."
+  />
 </template>
 <script>
 export default {
   data() {
-    return {
-      positions: [],
-    };
+    return {};
   },
   created() {
     this.queryPositions();
@@ -86,13 +92,14 @@ export default {
       this.$axios
         .get(`/position/${this.$route.params.platform}/list`)
         .then((response) => {
-          this.positions = response.data.data.map((item) => {
+          const positions = response.data.data.map((item) => {
             return {
               ...item,
               icon: require(`../assets/images/${item.name}.svg`),
             };
           });
           this.$store.commit("setLoading", false);
+          this.$store.commit("setPositions", positions);
         });
     },
     handleEdit(index, row) {

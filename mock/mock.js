@@ -1,7 +1,7 @@
 
 
 const Mock = (app) => {
-    app.get('/api/user/info', function (req, res) {
+    app.get('/user/info', function (req, res) {
         res.json({
             status: "ok",
             data: {
@@ -14,7 +14,7 @@ const Mock = (app) => {
             }
         })
     })
-    app.get('/api/user/login', function (req, res) {
+    app.get('/user/login', function (req, res) {
         res.json({
             status: 'ok',
             data: {
@@ -22,35 +22,62 @@ const Mock = (app) => {
             }
         })
     })
-    app.get('/api/position/virtual/list', function (req, res) {
+    app.get('/position/virtual/list', function (req, res) {
         res.json({
             status: 'ok',
             data: [
                 {
-                    key: '1',
                     name: 'BTC',
                     status: 'enable',
-                    directions: ['buy', 'sell'],
-                    contractTypes: ['quarter', 'next_quarter', 'this_week', 'next_week']
+                    directions: [{ name: '追涨', value: 'buy' }, { name: '杀跌', value: 'sell' }],
+                    contractTypes: [
+                        {
+                            name: '季度',
+                            value: 'quarter'
+                        }, {
+                            name: '下季度',
+                            value: 'next_quarter'
+                        }, {
+                            name: '本周',
+                            value: 'this_week'
+                        }, {
+                            name: '下周',
+                            value: 'next_week'
+                        }]
                 },
                 {
-                    key: '2',
                     name: 'ETH',
                     status: 'enable',
-                    directions: ['buy', 'sell'],
-                    contractTypes: ['quarter', 'next_quarter', 'this_week', 'next_week']
+                    directions: [{ name: '杀跌', value: 'sell' }],
+                    contractTypes: [
+                        {
+                            name: '季度',
+                            value: 'next_quarter'
+                        }]
                 },
                 {
-                    key: '3',
                     name: 'ETC',
                     status: 'disable',
-                    directions: ['buy', 'sell'],
-                    contractTypes: ['quarter', 'next_quarter', 'this_week', 'next_week']
+                    directions: [{ name: '追涨', value: 'buy' }, { name: '杀跌', value: 'sell' }],
+                    contractTypes: [
+                        {
+                            name: '季度',
+                            value: 'quarter'
+                        }, {
+                            name: '下季度',
+                            value: 'next_quarter'
+                        }, {
+                            name: '本周',
+                            value: 'this_week'
+                        }, {
+                            name: '下周',
+                            value: 'next_week'
+                        }]
                 },
             ]
         })
     })
-    app.get('/api/position/huobi/list', function (req, res) {
+    app.get('/position/huobi/list', function (req, res) {
         res.json({
             status: 'ok',
             data: [

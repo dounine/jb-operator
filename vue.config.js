@@ -9,9 +9,9 @@ module.exports = {
         },
         proxy: {
             "/api": {
-                target: "http://127.0.0.1:3003",
-                changeOrigin: true, // 是否改变域名
+                target: `http://localhost:${port}`,
                 ws: true,
+                changeOrigin: true, // 是否改变域名
                 pathRewrite: {
                     "^/api": ""
                 }

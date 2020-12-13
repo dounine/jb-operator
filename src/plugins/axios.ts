@@ -6,12 +6,18 @@ import axios from "axios"
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // let config = {
-    // baseURL: process.env.baseURL || process.env.apiUrl || "",
-    // timeout: 60 * 1000, // Timeout
-    // withCredentials: true, // Check cross-site Access-Control
+// baseURL: process.env.baseURL || process.env.apiUrl || "",
+// timeout: 60 * 1000, // Timeout
+// withCredentials: true, // Check cross-site Access-Control
 // }
 axios.defaults.timeout = 5000
-axios.defaults.baseURL = '/api'
+declare const window: any;
+if (window.__POWERED_BY_QIANKUN__) {
+    // eslint-disable-next-line no-undef
+    axios.defaults.baseURL = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + 'api'
+} else {
+    axios.defaults.baseURL = '/api'
+}
 
 const _axios = axios //.create(config)
 
