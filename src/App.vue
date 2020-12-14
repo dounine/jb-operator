@@ -9,19 +9,6 @@ export default {
       isCollapse: false,
     };
   },
-  computed: {},
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(this);
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    collapseStatus() {
-      this.isCollapse = !this.isCollapse;
-    },
-  },
 };
 </script>
 

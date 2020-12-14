@@ -50,7 +50,8 @@
             <el-col :span="12">
               <el-row justify="end" type="flex">
                 <el-col :span="4">
-                  <router-link :to="`/${platform}/${item.name}/${item.contractTypes[0].value}/${item.directions[0].value}/open`"
+                  <router-link
+                    :to="`/${platform}/${item.name}/${item.contractTypes[0].value}/${item.directions[0].value}/open`"
                     ><el-button icon="el-icon-s-operation" circle></el-button
                   ></router-link>
                   <!-- <router-link to="/operator/virtual"><el-button icon="el-icon-s-operation" circle></el-button></router-link> -->
@@ -62,11 +63,7 @@
       </div>
     </div>
   </div>
-  <div
-    v-if="loading"
-    v-loading="true"
-    element-loading-text="正在查询..."
-  />
+  <div v-if="loading" v-loading="true" element-loading-text="正在查询..." />
 </template>
 <script>
 export default {
