@@ -25,6 +25,8 @@ export async function mount(props) {
 }
 export async function unmount(props) {
     if (app) {
+        app.unmount();
+        app._container.innerHTML = '';
         // app.$destroy()
         app = null
     }

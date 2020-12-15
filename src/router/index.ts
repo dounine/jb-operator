@@ -23,11 +23,12 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
-  // { path: '', redirect: "/virtual" }
+  { path: '', redirect: "/virtual" }
 ]
 
+declare const window: any;
 const router = createRouter({
-  history: createWebHistory('/operator'),
+  history: createWebHistory(window.__POWERED_BY_QIANKUN__ ? '/operator' : '/'),
   routes
 })
 
