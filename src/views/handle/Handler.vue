@@ -1,11 +1,11 @@
 <template>
   <div
     style="margin-top: 40vh"
-    v-if="$store.state.positions.length == 0"
+    v-if="loading"
     v-loading="true"
     element-loading-text="正在查询..."
   />
-  <div v-if="$store.state.positions.length > 0">
+  <div v-if="positions.length > 0">
     <div class="nav">
       <el-page-header @back="goBack" content="操作页面" />
     </div>
@@ -49,6 +49,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -58,6 +59,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["positions", "loading"]),
     isBuy() {
       return this.$route.params.direction == "buy";
     },

@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import position from '../api/position'
 
 export default createStore({
   state: {
@@ -15,14 +16,22 @@ export default createStore({
     }
   },
   actions: {//async
+    queryPositions({ commit }) {
+      position.query('virtual')
+        .then(response => {
+          const convertPositions = response.data.data.map(item => {
+            return {
+              ...item,
+              icon: require(`../assets/images/${item.name}.svg`),
+            };
+          });
+          commit('setPositions', convertPositions)
+          commit('setLoading', false)
+        })
+    }
   },
   modules: {
   },
   getters: {
-    routerParams(state) {
-      return {
-        // fun: this.$route.path.split("/")[1]
-      }
-    }
   }
 })

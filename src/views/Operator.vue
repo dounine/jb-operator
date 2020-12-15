@@ -7,11 +7,7 @@
       </div>
       <div class="operator-divider"></div>
       <div class="operator-content">
-        <div
-          class="operator-item"
-          v-for="item in $store.state.positions"
-          :key="item.name"
-        >
+        <div class="operator-item" v-for="item in positions" :key="item.name">
           <el-row type="flex" align="middle">
             <el-col :span="12">
               <el-row type="flex" align="middle">
@@ -66,6 +62,7 @@
   <div v-if="loading" v-loading="true" element-loading-text="正在查询..." />
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   data() {
     return {};
@@ -74,9 +71,7 @@ export default {
     this.queryPositions();
   },
   computed: {
-    loading() {
-      return this.$store.state.loading;
-    },
+    ...mapState(["positions", "loading"]),
     platform() {
       return this.$route.params.platform;
     },
@@ -85,20 +80,7 @@ export default {
     },
   },
   methods: {
-    queryPositions() {
-      this.$axios
-        .get(`/position/${this.$route.params.platform}/list`)
-        .then((response) => {
-          const positions = response.data.data.map((item) => {
-            return {
-              ...item,
-              icon: require(`../assets/images/${item.name}.svg`),
-            };
-          });
-          this.$store.commit("setLoading", false);
-          this.$store.commit("setPositions", positions);
-        });
-    },
+    ...mapActions(["queryPositions"]),
     handleEdit(index, row) {
       console.log(index, row);
     },
