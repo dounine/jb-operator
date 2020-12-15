@@ -5,9 +5,12 @@ export default createStore({
   state: {
     loading: true,
     positions: [],
-    token: localStorage.getItem('token') || 'hello'
+    token: null
   },
   mutations: {//sync
+    setToken(state, value) {
+      state.token = value
+    },
     setLoading(state, value) {
       state.loading = value
     },

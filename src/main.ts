@@ -9,12 +9,17 @@ import './plugins/public-path.js'
 let app: any = null
 const render = (props) => {
     app = createApp(App).use(store).use(router).use(axios)
+    if (props.token) {
+        store.commit('setToken', props.token)
+    }
     installElementPlus(app)
     app.mount('#app')
 }
 declare const window: any;
 if (!window.__POWERED_BY_QIANKUN__) {
-    render({})
+    render({
+        token: localStorage.getItem('token') || ""
+    })
 }
 
 export async function bootstrap() {
