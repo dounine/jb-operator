@@ -68,7 +68,7 @@ export default {
     return {};
   },
   created() {
-    this.queryPositions();
+    this.queryPositions({platform:this.$route.params.platform});
   },
   computed: {
     ...mapState(["positions", "loading"]),

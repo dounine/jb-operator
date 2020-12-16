@@ -21,8 +21,8 @@ export default createStore({
     }
   },
   actions: {//async
-    queryPositions({ commit }) {
-      position.query('virtual')
+    queryPositions({ commit }, payload) {
+      position.query(payload.platform)
         .then(response => {
           const convertPositions = response.data.data.map(item => {
             return {
