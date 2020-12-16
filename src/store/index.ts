@@ -1,8 +1,10 @@
 import { createStore } from 'vuex'
 import position from '../api/position'
+import variables from './settings.js'
 
 export default createStore({
   state: {
+    theme: variables.theme,
     loading: true,
     positions: [],
     token: null
