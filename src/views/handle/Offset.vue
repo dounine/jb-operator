@@ -91,12 +91,11 @@ export default {
 <style>
 .statusItem {
   float: left;
-  font-size: 14px;
+  font-size: 13px;
   /* margin: 4px; */
   color: #cccccc;
 }
 .active {
-  color: maroon;
-  /* border-bottom: 2px solid #9cf; */
+  color: #52c41a;
 }
 </style>

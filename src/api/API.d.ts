@@ -10,12 +10,12 @@ declare namespace API {
     export interface Position {
         name: string;
         status: string;
-        directions: array<Direction>;
-        contractTypes: array<ContractType>;
+        directions: Direction[];
+        contractTypes: ContractType[];
         icon?: any;
     }
     export interface PositionData {
-        data: array<Position>;
+        data: Position[];
         code: string;
     }
 }
