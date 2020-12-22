@@ -1,7 +1,7 @@
 <template>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>实时(u)</span>
+      <span class="title">实时(u)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -19,7 +19,7 @@
   </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>反弹(u)</span>
+      <span class="title">反弹(u)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -36,7 +36,7 @@
   </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>差价(u)</span>
+      <span class="title">差价(u)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -53,7 +53,7 @@
   </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>调度(s)</span>
+      <span class="title">调度(s)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -70,7 +70,7 @@
   </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>超时(s)</span>
+      <span class="title">超时(s)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -87,7 +87,7 @@
   </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span>数量(张)</span>
+      <span class="title">数量(张)</span>
     </el-col>
     <el-col :span="21">
       <el-slider
@@ -191,5 +191,8 @@ export default {
 <style scoped>
 .row {
   min-height: 70px;
+}
+.title {
+  font-size: 14px;
 }
 </style>

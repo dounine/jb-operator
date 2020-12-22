@@ -23,7 +23,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
-    console.log('react app bootstraped');
+    console.log('jb-operator bootstraped');
 }
 export async function mount(props) {
     render(props)
@@ -32,7 +32,6 @@ export async function unmount(props) {
     if (app) {
         app.unmount();
         app._container.innerHTML = '';
-        // app.$destroy()
         app = null
     }
 }
