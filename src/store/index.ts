@@ -8,20 +8,46 @@ export default createStore({
         loading: true,
         positions: [],
         token: null,
-        socket: null
+        socket: null,
+        status: 'Stoped',
+        socketInterval: null,
+        slider: {
+            onlineValue: [],
+            tradeValue: null,
+            entrustValue: null,
+            initPrice: null
+        }
     },
     mutations: {//sync
         setToken(state, value) {
             state.token = value
         },
+        setStatus(state, value) {
+            state.status = value;
+        },
         setLoading(state, value) {
             state.loading = value
+        },
+        setSocketInterval(state, value) {
+            if (state.socketInterval) {
+                try {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    clearTimeout(state.socketInterval)
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+            state.socketInterval = value;
         },
         setPositions(state, value) {
             state.positions = value
         },
         setSocket(state, value) {
             state.socket = value;
+        },
+        setSlider(state, value) {
+            state.slider = value;
         }
     },
     actions: {//async
@@ -55,22 +81,53 @@ export default createStore({
                     console.log('socket onclose', closeEvent)
                     store.commit('setSocket', null)
                     const betweenSeconds = new Date().getSeconds() - time.getSeconds()
-                    console.log(betweenSeconds)
-                    if (betweenSeconds > 3) {
-                        console.log('socket 重连中', new Date())
-                        createSocket(new Date())
-                    } else {
-                        setTimeout(function () {
+                    if (window.location.pathname.split("/").length > 3) {
+                        if (betweenSeconds > 3) {
                             console.log('socket 重连中', new Date())
                             createSocket(new Date())
-                        }, (3 - betweenSeconds) * 1000)
+                        } else {
+                            store.commit('setSocketInterval', setTimeout(function () {
+                                console.log('socket 重连中', new Date())
+                                createSocket(new Date())
+                            }, (3 - betweenSeconds) * 1000))
+                        }
                     }
                 }
                 socket.onmessage = function (messageEvent) {
-                    console.log(JSON.parse(messageEvent.data))
+                    const data = JSON.parse(messageEvent.data)
+                    console.log(data)
+                    if (data.type === "slider") {
+                        if (data.data.type === "config") {
+                            const sliderConfig: API.SliderConfig = data.data;
+                            store.commit('setSlider', {
+                                ...store.state.slider,
+                                ...data.data.data
+                            })
+                        } else if (data.data.type === "online") {
+                            const online: API.SliderOnline = data.data;
+                            if (store.state.slider.entrustValue !== null) {
+                                store.commit('setSlider', {
+                                    ...store.state.slider,
+                                    tradeValue: Number(online.data.tradeValue),
+                                    onlineValue: [store.state.slider.entrustValue, Number(online.data.tradeValue)],
+                                    initPrice: Number(online.data.initPrice)
+                                });
+                            } else {
+                                store.commit('setSlider', {
+                                    ...store.state.slider,
+                                    tradeValue: Number(online.data.tradeValue),
+                                    onlineValue: [Number(online.data.tradeValue), Number(online.data.tradeValue)],
+                                    initPrice: Number(online.data.initPrice)
+                                });
+                            }
+                        }
+                    } else if (data.type === "upDownInfo") {
+                        if (data.data.status) {
+                            store.commit('setStatus', data.data.status);
+                        }
+                    }
                 }
             }
-
 
             if (!store.state.socket) {
                 createSocket(new Date())

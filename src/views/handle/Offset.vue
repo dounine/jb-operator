@@ -2,9 +2,9 @@
   <el-row type="flex" justify="end">
     <div style="height: 40px" class="status">
       <div
-        :class="'statusItem' + (status === s.value ? ' active' : '')"
-        v-for="(s, index) in statusList"
-        :key="s.value"
+          :class="'statusItem' + (status === s.value ? ' active' : '')"
+          v-for="(s, index) in statusList"
+          :key="s.value"
       >
         <span>{{ s.name }}</span>
         <el-divider direction="vertical" v-if="index !== statusList.length - 1"></el-divider>
@@ -14,7 +14,7 @@
   <div>
     <el-tabs v-model="offset" @tab-click="offsetHandleClick">
       <el-tab-pane label="开仓" name="open">
-        <Buy />
+        <Buy/>
       </el-tab-pane>
       <el-tab-pane label="平仓" name="close">平仓</el-tab-pane>
       <el-tab-pane label="计划委托" name="triggerEntrust">计划委托</el-tab-pane>
@@ -25,10 +25,12 @@
 </template>
 <script>
 import Buy from "./Buy.vue";
+import {mapActions, mapState} from 'vuex';
+
 export default {
   data() {
     return {
-      status: "Stoped",
+      // status: "Closed",
       statusList: [
         {
           value: "Stoped",
@@ -75,10 +77,24 @@ export default {
       symbolInfo: {},
     };
   },
-  unmounted() {
-    console.log('offset unmounted')
+  computed: {
+    ...mapState(['status']),
   },
+  // unmounted() {
+  //   console.log('offset unmounted')
+  // },
+  // created() {
+  //   const params = this.$route.params;
+  //   this.infoChange({
+  //     platform: params.platform,
+  //     symbol: params.symbol,
+  //     contractType: params.contractType,
+  //     direction: params.direction,
+  //     offset: params.offset
+  //   })
+  // },
   methods: {
+    ...mapActions(['infoChange']),
     offsetHandleClick(tab) {
       const params = this.$route.params;
       this.$router.push({
@@ -98,6 +114,7 @@ export default {
   /* margin: 4px; */
   color: #cccccc;
 }
+
 .active {
   color: #52c41a;
 }

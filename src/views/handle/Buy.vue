@@ -4,15 +4,17 @@
       <span class="title">实时(u)</span>
     </el-col>
     <el-col :span="21">
+      <i class="el-icon-loading" v-if="!slider.online || slider.onlineValue.length ===0"></i>
       <el-slider
-        :disabled="onlineConfig.disable"
-        :min="onlineConfig.min"
-        :max="onlineConfig.max"
-        :setup="onlineConfig.setup"
-        :marks="onlineConfig.marks"
-        :show-input="onlineConfig.input"
-        v-model="online"
-        range
+          v-if="slider.online && slider.onlineValue.length >0"
+          :disabled="slider.online.disable"
+          :min="slider.online.min"
+          :max="slider.online.max"
+          :setup="slider.online.setup"
+          :marks="slider.online.marks"
+          :show-input="slider.online.input"
+          v-model="slider.onlineValue"
+          range
       >
       </el-slider>
     </el-col>
@@ -23,13 +25,13 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="reboundConfig.disable"
-        :min="reboundConfig.min"
-        :max="reboundConfig.max"
-        :setup="reboundConfig.setup"
-        :marks="reboundConfig.marks"
-        :show-input="reboundConfig.input"
-        v-model="rebound"
+          :disabled="reboundConfig.disable"
+          :min="reboundConfig.min"
+          :max="reboundConfig.max"
+          :setup="reboundConfig.setup"
+          :marks="reboundConfig.marks"
+          :show-input="reboundConfig.input"
+          v-model="rebound"
       >
       </el-slider>
     </el-col>
@@ -40,13 +42,13 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="spreadConfig.disable"
-        :min="spreadConfig.min"
-        :max="spreadConfig.max"
-        :setup="spreadConfig.setup"
-        :marks="spreadConfig.marks"
-        :show-input="spreadConfig.input"
-        v-model="spread"
+          :disabled="spreadConfig.disable"
+          :min="spreadConfig.min"
+          :max="spreadConfig.max"
+          :setup="spreadConfig.setup"
+          :marks="spreadConfig.marks"
+          :show-input="spreadConfig.input"
+          v-model="spread"
       >
       </el-slider>
     </el-col>
@@ -57,13 +59,13 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="schedulingConfig.disable"
-        :min="schedulingConfig.min"
-        :max="schedulingConfig.max"
-        :setup="schedulingConfig.setup"
-        :marks="schedulingConfig.marks"
-        :show-input="schedulingConfig.input"
-        v-model="scheduling"
+          :disabled="schedulingConfig.disable"
+          :min="schedulingConfig.min"
+          :max="schedulingConfig.max"
+          :setup="schedulingConfig.setup"
+          :marks="schedulingConfig.marks"
+          :show-input="schedulingConfig.input"
+          v-model="scheduling"
       >
       </el-slider>
     </el-col>
@@ -74,13 +76,13 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="timeoutConfig.disable"
-        :min="timeoutConfig.min"
-        :max="timeoutConfig.max"
-        :setup="timeoutConfig.setup"
-        :marks="timeoutConfig.marks"
-        :show-input="timeoutConfig.input"
-        v-model="timeout"
+          :disabled="timeoutConfig.disable"
+          :min="timeoutConfig.min"
+          :max="timeoutConfig.max"
+          :setup="timeoutConfig.setup"
+          :marks="timeoutConfig.marks"
+          :show-input="timeoutConfig.input"
+          v-model="timeout"
       >
       </el-slider>
     </el-col>
@@ -91,13 +93,13 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="volumnConfig.disable"
-        :min="volumnConfig.min"
-        :max="volumnConfig.max"
-        :setup="volumnConfig.setup"
-        :marks="volumnConfig.marks"
-        :show-input="volumnConfig.input"
-        v-model="volumn"
+          :disabled="volumnConfig.disable"
+          :min="volumnConfig.min"
+          :max="volumnConfig.max"
+          :setup="volumnConfig.setup"
+          :marks="volumnConfig.marks"
+          :show-input="volumnConfig.input"
+          v-model="volumn"
       >
       </el-slider>
     </el-col>
@@ -105,22 +107,24 @@
 </template>
 
 <script>
+import {mapState, mapActions} from "vuex";
+
 export default {
   data() {
     return {
-      online: [30, 60],
-      onlineConfig: {
-        min: 0,
-        max: 100,
-        setup: 0.5,
-        disable: true,
-        input: false,
-        marks: {
-          0: "0",
-          50: "50",
-          100: "100",
-        },
-      },
+      // online: [30, 60],
+      // onlineConfig: {
+      //   min: 0,
+      //   max: 100,
+      //   setup: 0.5,
+      //   disable: true,
+      //   input: false,
+      //   marks: {
+      //     0: "0",
+      //     50: "50",
+      //     100: "100",
+      //   },
+      // },
       rebound: 10,
       reboundConfig: {
         min: 0,
@@ -183,6 +187,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(['slider']),
+  },
   created() {
     console.log("buy createed");
   },
@@ -192,6 +199,7 @@ export default {
 .row {
   min-height: 70px;
 }
+
 .title {
   font-size: 14px;
 }
