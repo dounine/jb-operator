@@ -5,12 +5,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="onlineConfig.disabled"
+        :disabled="onlineConfig.disable"
         :min="onlineConfig.min"
         :max="onlineConfig.max"
         :setup="onlineConfig.setup"
         :marks="onlineConfig.marks"
-        :show-input="onlineConfig.showInput"
+        :show-input="onlineConfig.input"
         v-model="online"
         range
       >
@@ -23,12 +23,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="reboundConfig.disabled"
+        :disabled="reboundConfig.disable"
         :min="reboundConfig.min"
         :max="reboundConfig.max"
         :setup="reboundConfig.setup"
         :marks="reboundConfig.marks"
-        :show-input="reboundConfig.showInput"
+        :show-input="reboundConfig.input"
         v-model="rebound"
       >
       </el-slider>
@@ -40,12 +40,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="spreadConfig.disabled"
+        :disabled="spreadConfig.disable"
         :min="spreadConfig.min"
         :max="spreadConfig.max"
         :setup="spreadConfig.setup"
         :marks="spreadConfig.marks"
-        :show-input="spreadConfig.showInput"
+        :show-input="spreadConfig.input"
         v-model="spread"
       >
       </el-slider>
@@ -57,12 +57,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="schedulingConfig.disabled"
+        :disabled="schedulingConfig.disable"
         :min="schedulingConfig.min"
         :max="schedulingConfig.max"
         :setup="schedulingConfig.setup"
         :marks="schedulingConfig.marks"
-        :show-input="schedulingConfig.showInput"
+        :show-input="schedulingConfig.input"
         v-model="scheduling"
       >
       </el-slider>
@@ -74,12 +74,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="timeoutConfig.disabled"
+        :disabled="timeoutConfig.disable"
         :min="timeoutConfig.min"
         :max="timeoutConfig.max"
         :setup="timeoutConfig.setup"
         :marks="timeoutConfig.marks"
-        :show-input="timeoutConfig.showInput"
+        :show-input="timeoutConfig.input"
         v-model="timeout"
       >
       </el-slider>
@@ -91,12 +91,12 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-        :disabled="volumnConfig.disabled"
+        :disabled="volumnConfig.disable"
         :min="volumnConfig.min"
         :max="volumnConfig.max"
         :setup="volumnConfig.setup"
         :marks="volumnConfig.marks"
-        :show-input="volumnConfig.showInput"
+        :show-input="volumnConfig.input"
         v-model="volumn"
       >
       </el-slider>
@@ -113,8 +113,8 @@ export default {
         min: 0,
         max: 100,
         setup: 0.5,
-        disabled: true,
-        showInput: false,
+        disable: true,
+        input: false,
         marks: {
           0: "0",
           50: "50",
@@ -126,8 +126,8 @@ export default {
         min: 0,
         max: 50,
         setup: 1,
-        disabled: false,
-        showInput: false,
+        disable: false,
+        input: false,
         marks: {
           0: "0",
           50: "50",
@@ -138,8 +138,8 @@ export default {
         min: 0,
         max: 50,
         setup: 1,
-        disabled: false,
-        showInput: false,
+        disable: false,
+        input: false,
         marks: {
           0: "0",
           50: "50",
@@ -150,8 +150,8 @@ export default {
         min: 0,
         max: 50,
         setup: 1,
-        disabled: false,
-        showInput: false,
+        disable: false,
+        input: false,
         marks: {
           0: "0",
           50: "50",
@@ -162,8 +162,8 @@ export default {
         min: 0,
         max: 60,
         setup: 1,
-        disabled: false,
-        showInput: false,
+        disable: false,
+        input: false,
         marks: {
           0: "0",
           60: "60",
@@ -174,8 +174,8 @@ export default {
         min: 0,
         max: 50,
         setup: 1,
-        disabled: false,
-        showInput: true,
+        disable: false,
+        input: true,
         marks: {
           0: "0",
           50: "50",

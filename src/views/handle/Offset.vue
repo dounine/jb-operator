@@ -2,12 +2,12 @@
   <el-row type="flex" justify="end">
     <div style="height: 40px" class="status">
       <div
-        :class="'statusItem' + (status == s.value ? ' active' : '')"
+        :class="'statusItem' + (status === s.value ? ' active' : '')"
         v-for="(s, index) in statusList"
         :key="s.value"
       >
         <span>{{ s.name }}</span>
-        <el-divider direction="vertical" v-if="index != statusList.length - 1"></el-divider>
+        <el-divider direction="vertical" v-if="index !== statusList.length - 1"></el-divider>
       </div>
     </div>
   </el-row>
@@ -74,6 +74,9 @@ export default {
       offset: this.$route.params.offset,
       symbolInfo: {},
     };
+  },
+  unmounted() {
+    console.log('offset unmounted')
   },
   methods: {
     offsetHandleClick(tab) {
