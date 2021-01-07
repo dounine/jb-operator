@@ -122,7 +122,6 @@ export default createStore({
                     } else if (data.type === "slider") {
                         if (data.data.type === "config") {
                             const sliderConfig: API.SliderConfig = data.data;
-                            console.log(sliderConfig.data)
                             store.commit('setSlider', {
                                 ...store.state.slider,
                                 [sliderConfig.data.offset]: {
@@ -132,7 +131,6 @@ export default createStore({
                             })
                         } else if (data.data.type === "online") {
                             const online: API.SliderOnline = data.data;
-                            console.log(online.data)
                             store.commit('setSlider', {
                                 ...store.state.slider,
                                 [online.data.offset]: {
@@ -160,7 +158,16 @@ export default createStore({
                                             store.state.slider.open.tradeValue,
                                             store.state.slider.open.tradeValue
                                         ],
+                                    },
+                                    close: {
+                                        ...store.state.slider.close,
+                                        entrustValue: null,
+                                        online: [
+                                            store.state.slider.close.tradeValue,
+                                            store.state.slider.close.tradeValue
+                                        ],
                                     }
+
                                 })
                             }
                             store.commit('setSlider', {

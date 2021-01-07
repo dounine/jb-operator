@@ -16,7 +16,9 @@
       <el-tab-pane label="开仓" name="open">
         <Open/>
       </el-tab-pane>
-      <el-tab-pane label="平仓" name="close">平仓</el-tab-pane>
+      <el-tab-pane label="平仓" name="close">
+        <Close/>
+      </el-tab-pane>
       <el-tab-pane label="计划委托" name="triggerEntrust">计划委托</el-tab-pane>
       <el-tab-pane label="委托" name="entrust">委托</el-tab-pane>
       <el-tab-pane label="设置" name="settings">设置</el-tab-pane>
@@ -25,6 +27,7 @@
 </template>
 <script>
 import Open from "./Open.vue";
+import Close from "./Close.vue";
 import {mapActions, mapState} from 'vuex';
 
 export default {
@@ -80,19 +83,6 @@ export default {
   computed: {
     ...mapState(['status']),
   },
-  // unmounted() {
-  //   console.log('offset unmounted')
-  // },
-  // created() {
-  //   const params = this.$route.params;
-  //   this.infoChange({
-  //     platform: params.platform,
-  //     symbol: params.symbol,
-  //     contractType: params.contractType,
-  //     direction: params.direction,
-  //     offset: params.offset
-  //   })
-  // },
   methods: {
     ...mapActions(['infoChange']),
     offsetHandleClick(tab) {
@@ -100,10 +90,18 @@ export default {
       this.$router.push({
         path: `/${params.platform}/${params.symbol}/${params.contractType}/${params.direction}/${tab.props.name}`,
       });
+      this.infoChange({
+        platform: params.platform,
+        symbol: params.symbol,
+        contractType: params.contractType,
+        direction: params.direction,
+        offset: tab.props.name
+      })
     },
   },
   components: {
     Open,
+    Close
   },
 };
 </script>

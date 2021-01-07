@@ -197,7 +197,7 @@ export default {
     ...mapState(['slider']),
   },
   created() {
-    console.log("buy createed");
+    console.log("open createed");
   },
 };
 </script>
