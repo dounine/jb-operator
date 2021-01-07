@@ -46,9 +46,10 @@ declare namespace API {
     }
 
     export interface SliderOnlineData {
-        initPrice: string;
-        tradePrice: string;
-        tradeValue: string;
+        initPrice?: string;
+        tradePrice?: string;
+        tradeValue?: string;
+        entrustValue?: string;
     }
 
     export interface SliderOnline {

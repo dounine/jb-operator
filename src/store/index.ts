@@ -15,7 +15,7 @@ export default createStore({
             onlineValue: [],
             tradeValue: null,
             entrustValue: null,
-            initPrice: null
+            initPrice: null,
         }
     },
     mutations: {//sync
@@ -96,34 +96,43 @@ export default createStore({
                 socket.onmessage = function (messageEvent) {
                     const data = JSON.parse(messageEvent.data)
                     console.log(data)
-                    if (data.type === "slider") {
+                    if (data.type === "tip") {
+                        console.log(data.data)
+                    } else if (data.type === "slider") {
                         if (data.data.type === "config") {
                             const sliderConfig: API.SliderConfig = data.data;
+                            console.log(sliderConfig.data)
                             store.commit('setSlider', {
                                 ...store.state.slider,
                                 ...data.data.data
                             })
                         } else if (data.data.type === "online") {
                             const online: API.SliderOnline = data.data;
-                            if (store.state.slider.entrustValue !== null) {
-                                store.commit('setSlider', {
-                                    ...store.state.slider,
-                                    tradeValue: Number(online.data.tradeValue),
-                                    onlineValue: [store.state.slider.entrustValue, Number(online.data.tradeValue)],
-                                    initPrice: Number(online.data.initPrice)
-                                });
-                            } else {
-                                store.commit('setSlider', {
-                                    ...store.state.slider,
-                                    tradeValue: Number(online.data.tradeValue),
-                                    onlineValue: [Number(online.data.tradeValue), Number(online.data.tradeValue)],
-                                    initPrice: Number(online.data.initPrice)
-                                });
-                            }
+                            console.log(online.data)
+                            store.commit('setSlider', {
+                                ...store.state.slider,
+                                tradeValue: Number(online.data.tradeValue) || store.state.slider.tradeValue,
+                                initPrice: Number(online.data.initPrice) || store.state.slider.initPrice,
+                                onlineValue: [
+                                    Number(online.data.tradeValue) || store.state.slider.tradeValue || Number(online.data.entrustValue),
+                                    Number(online.data.entrustValue) || store.state.slider.entrustValue || Number(online.data.tradeValue)
+                                ],
+                                entrustValue: Number(online.data.entrustValue) || store.state.slider.entrustValue,
+                            })
                         }
                     } else if (data.type === "upDownInfo") {
                         if (data.data.status) {
                             store.commit('setStatus', data.data.status);
+                            if (data.data.status == 'Closed') {
+                                store.commit('setSlider', {
+                                    ...store.state.slider,
+                                    entrustValue: null,
+                                    onlineValue: [
+                                        store.state.slider.tradeValue,
+                                        store.state.slider.tradeValue
+                                    ],
+                                })
+                            }
                         }
                     }
                 }
