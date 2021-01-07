@@ -32,6 +32,7 @@ declare namespace API {
     }
 
     export interface SliderConfigData {
+        offset: string;
         online: Config;
         rebound: Config;
         scheduling: Config;
@@ -46,6 +47,7 @@ declare namespace API {
     }
 
     export interface SliderOnlineData {
+        offset: string;
         initPrice?: string;
         tradePrice?: string;
         tradeValue?: string;

@@ -12,10 +12,30 @@ export default createStore({
         status: 'Stoped',
         socketInterval: null,
         slider: {
-            onlineValue: [],
-            tradeValue: null,
-            entrustValue: null,
-            initPrice: null,
+            open: {
+                config: null,
+                online: [],
+                rebound: 0,
+                spread: 0,
+                scheduling: 0,
+                timeout: 0,
+                volumn: 0,
+                tradeValue: null,
+                entrustValue: null,
+                initPrice: null,
+            },
+            close: {
+                config: null,
+                online: [],
+                rebound: 0,
+                spread: 0,
+                scheduling: 0,
+                timeout: 0,
+                volumn: 0,
+                tradeValue: null,
+                entrustValue: null,
+                initPrice: null,
+            },
         }
     },
     mutations: {//sync
@@ -47,6 +67,7 @@ export default createStore({
             state.socket = value;
         },
         setSlider(state, value) {
+            console.log('setSlider', value)
             state.slider = value;
         }
     },
@@ -104,20 +125,26 @@ export default createStore({
                             console.log(sliderConfig.data)
                             store.commit('setSlider', {
                                 ...store.state.slider,
-                                ...data.data.data
+                                [sliderConfig.data.offset]: {
+                                    ...store.state.slider[sliderConfig.data.offset],
+                                    config: sliderConfig.data
+                                }
                             })
                         } else if (data.data.type === "online") {
                             const online: API.SliderOnline = data.data;
                             console.log(online.data)
                             store.commit('setSlider', {
                                 ...store.state.slider,
-                                tradeValue: Number(online.data.tradeValue) || store.state.slider.tradeValue,
-                                initPrice: Number(online.data.initPrice) || store.state.slider.initPrice,
-                                onlineValue: [
-                                    Number(online.data.tradeValue) || store.state.slider.tradeValue || Number(online.data.entrustValue),
-                                    Number(online.data.entrustValue) || store.state.slider.entrustValue || Number(online.data.tradeValue)
-                                ],
-                                entrustValue: Number(online.data.entrustValue) || store.state.slider.entrustValue,
+                                [online.data.offset]: {
+                                    ...store.state.slider[online.data.offset],
+                                    tradeValue: Number(online.data.tradeValue) || store.state.slider[online.data.offset].tradeValue,
+                                    initPrice: Number(online.data.initPrice) || store.state.slider[online.data.offset].initPrice,
+                                    online: [
+                                        Number(online.data.tradeValue) || store.state.slider[online.data.offset].tradeValue || Number(online.data.entrustValue),
+                                        Number(online.data.entrustValue) || store.state.slider[online.data.offset].entrustValue || Number(online.data.tradeValue)
+                                    ],
+                                    entrustValue: Number(online.data.entrustValue) || store.state.slider[online.data.offset].entrustValue,
+                                }
                             })
                         }
                     } else if (data.type === "upDownInfo") {
@@ -126,13 +153,27 @@ export default createStore({
                             if (data.data.status == 'Closed') {
                                 store.commit('setSlider', {
                                     ...store.state.slider,
-                                    entrustValue: null,
-                                    onlineValue: [
-                                        store.state.slider.tradeValue,
-                                        store.state.slider.tradeValue
-                                    ],
+                                    open: {
+                                        ...store.state.slider.open,
+                                        entrustValue: null,
+                                        online: [
+                                            store.state.slider.open.tradeValue,
+                                            store.state.slider.open.tradeValue
+                                        ],
+                                    }
                                 })
                             }
+                            store.commit('setSlider', {
+                                ...store.state.slider,
+                                open: {
+                                    ...store.state.slider.open,
+                                    ...data.data.open
+                                },
+                                close: {
+                                    ...store.state.slider.close,
+                                    ...data.data.close
+                                }
+                            })
                         }
                     }
                 }

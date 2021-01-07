@@ -14,7 +14,7 @@
   <div>
     <el-tabs v-model="offset" @tab-click="offsetHandleClick">
       <el-tab-pane label="开仓" name="open">
-        <Buy/>
+        <Open/>
       </el-tab-pane>
       <el-tab-pane label="平仓" name="close">平仓</el-tab-pane>
       <el-tab-pane label="计划委托" name="triggerEntrust">计划委托</el-tab-pane>
@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import Buy from "./Buy.vue";
+import Open from "./Open.vue";
 import {mapActions, mapState} from 'vuex';
 
 export default {
@@ -103,7 +103,7 @@ export default {
     },
   },
   components: {
-    Buy,
+    Open,
   },
 };
 </script>
