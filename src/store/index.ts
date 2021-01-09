@@ -72,6 +72,30 @@ export default createStore({
         }
     },
     actions: {//async
+        update(store, payload) {
+            console.log('update', payload)
+            if (store.state.socket) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                store.state.socket.send(JSON.stringify({
+                    type: 'upDown',
+                    data: {
+                        type: 'upDownUpdate',
+                        data: {
+                            platform: payload.platform,
+                            symbol: payload.symbol,
+                            contractType: payload.contractType,
+                            direction: payload.direction,
+                            name: payload.name,
+                            value: payload.value
+                        }
+                    }
+                }))
+            } else {
+                console.error("socket 未连接")
+            }
+
+        },
         infoChange(store, payload) {
             console.log('infoChange')
             console.log(payload)
@@ -103,7 +127,7 @@ export default createStore({
                     store.commit('setSocket', null)
                     const betweenSeconds = new Date().getSeconds() - time.getSeconds()
                     if (window.location.pathname.split("/").length > 3) {
-                        if (betweenSeconds > 3) {
+                        if (betweenSeconds > 3 || betweenSeconds < 0) {
                             console.log('socket 重连中', new Date())
                             createSocket(new Date())
                         } else {

@@ -33,6 +33,7 @@
           :setup="slider.open.config.rebound.setup"
           :marks="slider.open.config.rebound.marks"
           :show-input="slider.open.config.rebound.input"
+          @change="reboundUpdate"
           v-model="slider.open.rebound"
       >
       </el-slider>
@@ -51,6 +52,7 @@
           :setup="slider.open.config.spread.setup"
           :marks="slider.open.config.spread.marks"
           :show-input="slider.open.config.spread.input"
+          @change="spreadUpdate"
           v-model="slider.open.spread"
       >
       </el-slider>
@@ -69,6 +71,7 @@
           :setup="slider.open.config.scheduling.setup"
           :marks="slider.open.config.scheduling.marks"
           :show-input="slider.open.config.scheduling.input"
+          @change="schedulingUpdate"
           v-model="slider.open.scheduling"
       >
       </el-slider>
@@ -87,6 +90,7 @@
           :setup="slider.open.config.timeout.setup"
           :marks="slider.open.config.timeout.marks"
           :show-input="slider.open.config.timeout.input"
+          @change="timeoutUpdate"
           v-model="slider.open.timeout"
       >
       </el-slider>
@@ -105,6 +109,7 @@
           :setup="slider.open.config.volumn.setup"
           :marks="slider.open.config.volumn.marks"
           :show-input="slider.open.config.volumn.input"
+          @change="volumnUpdate"
           v-model="slider.open.volumn"
       >
       </el-slider>
@@ -117,84 +122,74 @@ import {mapState, mapActions} from "vuex";
 
 export default {
   data() {
-    return {
-      // online: [30, 60],
-      // onlineConfig: {
-      //   min: 0,
-      //   max: 100,
-      //   setup: 0.5,
-      //   disable: true,
-      //   input: false,
-      //   marks: {
-      //     0: "0",
-      //     50: "50",
-      //     100: "100",
-      //   },
-      // },
-      // rebound: 10,
-      // reboundConfig: {
-      //   min: 0,
-      //   max: 50,
-      //   setup: 1,
-      //   disable: false,
-      //   input: false,
-      //   marks: {
-      //     0: "0",
-      //     50: "50",
-      //   },
-      // },
-      // spread: 30,
-      // spreadConfig: {
-      //   min: 0,
-      //   max: 50,
-      //   setup: 1,
-      //   disable: false,
-      //   input: false,
-      //   marks: {
-      //     0: "0",
-      //     50: "50",
-      //   },
-      // },
-      // scheduling: 10,
-      // schedulingConfig: {
-      //   min: 0,
-      //   max: 50,
-      //   setup: 1,
-      //   disable: false,
-      //   input: false,
-      //   marks: {
-      //     0: "0",
-      //     50: "50",
-      //   },
-      // },
-      // timeout: 3,
-      // timeoutConfig: {
-      //   min: 0,
-      //   max: 60,
-      //   setup: 1,
-      //   disable: false,
-      //   input: false,
-      //   marks: {
-      //     0: "0",
-      //     60: "60",
-      //   },
-      // },
-      // volumn: 1,
-      // volumnConfig: {
-      //   min: 0,
-      //   max: 50,
-      //   setup: 1,
-      //   disable: false,
-      //   input: true,
-      //   marks: {
-      //     0: "0",
-      //     50: "50",
-      //   },
-      // },
-    };
+    return {};
   },
   computed: {
     ...mapState(['slider']),
+  },
+  methods: {
+    ...mapActions(['update']),
+    volumnUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}Volume`,
+        value: `${value}`
+      })
+    },
+    schedulingUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}Scheduling`,
+        value: `${value}`
+      })
+    },
+    timeoutUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}EntrustTimeout`,
+        value: `${value}`
+      })
+    },
+    spreadUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}TriggerPriceSpread`,
+        value: `${value}`
+      })
+    },
+    reboundUpdate(value) {
+      console.log('-------', value)
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}ReboundPrice`,
+        value: `${value}`
+      })
+    }
   },
   created() {
     console.log("open createed");
