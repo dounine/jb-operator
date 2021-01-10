@@ -33,6 +33,7 @@
           :setup="slider.close.config.rebound.setup"
           :marks="slider.close.config.rebound.marks"
           :show-input="slider.close.config.rebound.input"
+          @change="reboundUpdate"
           v-model="slider.close.rebound"
       >
       </el-slider>
@@ -51,6 +52,7 @@
           :setup="slider.close.config.spread.setup"
           :marks="slider.close.config.spread.marks"
           :show-input="slider.close.config.spread.input"
+          @change="spreadUpdate"
           v-model="slider.close.spread"
       >
       </el-slider>
@@ -69,6 +71,7 @@
           :setup="slider.close.config.timeout.setup"
           :marks="slider.close.config.timeout.marks"
           :show-input="slider.close.config.timeout.input"
+          @change="timeoutUpdate"
           v-model="slider.close.timeout"
       >
       </el-slider>
@@ -80,14 +83,15 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-          v-if="slider.close.config && slider.close.config.volumn"
-          :disabled="slider.close.config.volumn.disable"
-          :min="slider.close.config.volumn.min"
-          :max="slider.close.config.volumn.max"
-          :setup="slider.close.config.volumn.setup"
-          :marks="slider.close.config.volumn.marks"
-          :show-input="slider.close.config.volumn.input"
-          v-model="slider.close.volumn"
+          v-if="slider.close.config && slider.close.config.volume"
+          :disabled="slider.close.config.volume.disable"
+          :min="slider.close.config.volume.min"
+          :max="slider.close.config.volume.max"
+          :setup="slider.close.config.volume.setup"
+          :marks="slider.close.config.volume.marks"
+          :show-input="slider.close.config.volume.input"
+          @change="volumeUpdate"
+          v-model="slider.close.volume"
       >
       </el-slider>
     </el-col>
@@ -99,11 +103,73 @@ import {mapState, mapActions} from "vuex";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState(['slider']),
+  },
+  methods: {
+    ...mapActions(['update']),
+    volumeUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}Volume`,
+        value: `${value}`
+      })
+    },
+    schedulingUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}Scheduling`,
+        value: `${value}`
+      })
+    },
+    timeoutUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}EntrustTimeout`,
+        value: `${value}`
+      })
+    },
+    spreadUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}TriggerPriceSpread`,
+        value: `${value}`
+      })
+    },
+    reboundUpdate(value) {
+      const params = this.$route.params;
+      const offset = params.offset;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: `${offset}ReboundPrice`,
+        value: `${value}`
+      })
+    }
   },
   created() {
     console.log("close createed");

@@ -102,15 +102,15 @@
     </el-col>
     <el-col :span="21">
       <el-slider
-          v-if="slider.open.config && slider.open.config.volumn"
-          :disabled="slider.open.config.volumn.disable"
-          :min="slider.open.config.volumn.min"
-          :max="slider.open.config.volumn.max"
-          :setup="slider.open.config.volumn.setup"
-          :marks="slider.open.config.volumn.marks"
-          :show-input="slider.open.config.volumn.input"
-          @change="volumnUpdate"
-          v-model="slider.open.volumn"
+          v-if="slider.open.config && slider.open.config.volume"
+          :disabled="slider.open.config.volume.disable"
+          :min="slider.open.config.volume.min"
+          :max="slider.open.config.volume.max"
+          :setup="slider.open.config.volume.setup"
+          :marks="slider.open.config.volume.marks"
+          :show-input="slider.open.config.volume.input"
+          @change="volumeUpdate"
+          v-model="slider.open.volume"
       >
       </el-slider>
     </el-col>
@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     ...mapActions(['update']),
-    volumnUpdate(value) {
+    volumeUpdate(value) {
       const params = this.$route.params;
       const offset = params.offset;
       this.update({
@@ -178,7 +178,6 @@ export default {
       })
     },
     reboundUpdate(value) {
-      console.log('-------', value)
       const params = this.$route.params;
       const offset = params.offset;
       this.update({

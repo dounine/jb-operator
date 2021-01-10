@@ -139,8 +139,8 @@ export default createStore({
                     }
                 }
                 socket.onmessage = function (messageEvent) {
+                    console.log(messageEvent.data)
                     const data = JSON.parse(messageEvent.data)
-                    console.log(data)
                     if (data.type === "tip") {
                         console.log(data.data)
                     } else if (data.type === "slider") {
