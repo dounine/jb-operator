@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="2">
-      <span class="title">开关</span>
+      <span class="title">运行开关</span>
     </el-col>
     <el-col :span="21">
       <el-switch @change="runUpdate" active-value="true" inactive-value="false" v-model="slider.open.run" :loading="slider.open.runLoading"></el-switch>

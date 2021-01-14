@@ -37,7 +37,11 @@ export default {
       statusList: [
         {
           value: "Stoped",
-          name: "停止",
+          name: "已停止",
+        },
+        {
+          value: "Stopping",
+          name: "停止中",
         },
         {
           value: "OpenTriggering",
