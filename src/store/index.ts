@@ -13,7 +13,7 @@ export default createStore({
         socketInterval: null,
         slider: {
             open: {
-                run: false,
+                run: 'false',
                 runLoading: true,
                 config: null,
                 online: [],
