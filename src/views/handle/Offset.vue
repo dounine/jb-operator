@@ -60,6 +60,10 @@ export default {
           name: "已开仓",
         },
         {
+          value: "OpenErrored",
+          name: "开仓错误"
+        },
+        {
           value: "CloseTriggering",
           name: "平仓中",
         },
@@ -76,8 +80,8 @@ export default {
           name: "已平仓",
         },
         {
-          value: "Error",
-          name: "错误",
+          value: "CloseErrored",
+          name: "平仓错误"
         },
       ],
       offset: this.$route.params.offset,
