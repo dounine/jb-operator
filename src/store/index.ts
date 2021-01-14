@@ -13,6 +13,8 @@ export default createStore({
         socketInterval: null,
         slider: {
             open: {
+                run: false,
+                runLoading: true,
                 config: null,
                 online: [],
                 rebound: 0,
@@ -67,7 +69,6 @@ export default createStore({
             state.socket = value;
         },
         setSlider(state, value) {
-            console.log('setSlider', value)
             state.slider = value;
         }
     },
@@ -172,7 +173,7 @@ export default createStore({
                     } else if (data.type === "upDownInfo") {
                         if (data.data.status) {
                             store.commit('setStatus', data.data.status);
-                            if (data.data.status == 'Closed') {
+                            if (data.data.status == 'Closed' || data.data.status == 'Stoped') {
                                 store.commit('setSlider', {
                                     ...store.state.slider,
                                     open: {

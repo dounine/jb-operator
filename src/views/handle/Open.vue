@@ -1,4 +1,12 @@
 <template>
+  <el-row>
+    <el-col :span="2">
+      <span class="title">开关</span>
+    </el-col>
+    <el-col :span="21">
+      <el-switch @change="runUpdate" active-value="true" inactive-value="false" v-model="slider.open.run" :loading="slider.open.runLoading"></el-switch>
+    </el-col>
+  </el-row>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
       <span class="title">实时(u)</span>
@@ -129,6 +137,17 @@ export default {
   },
   methods: {
     ...mapActions(['update']),
+    runUpdate(value) {
+      const params = this.$route.params;
+      this.update({
+        symbol: params.symbol,
+        contractType: params.contractType,
+        platform: params.platform,
+        direction: params.direction,
+        name: "run",
+        value: `${value}`
+      })
+    },
     volumeUpdate(value) {
       const params = this.$route.params;
       const offset = params.offset;
