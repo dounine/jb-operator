@@ -1,7 +1,7 @@
 <template>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
-      <span class="title">信息</span>
+      <span class="title">持仓信息</span>
     </el-col>
     <el-col :span="21">
       <span class="title" v-if="slider.close.profix">收益率：<span
