@@ -27,6 +27,7 @@ export default createStore({
                 initPrice: null,
             },
             close: {
+                profix: null,
                 config: null,
                 online: [],
                 rebound: 0,
@@ -195,18 +196,18 @@ export default createStore({
 
                                 })
                             }
-                            store.commit('setSlider', {
-                                ...store.state.slider,
-                                open: {
-                                    ...store.state.slider.open,
-                                    ...data.data.open
-                                },
-                                close: {
-                                    ...store.state.slider.close,
-                                    ...data.data.close
-                                }
-                            })
                         }
+                        store.commit('setSlider', {
+                            ...store.state.slider,
+                            open: {
+                                ...store.state.slider.open,
+                                ...data.data.open
+                            },
+                            close: {
+                                ...store.state.slider.close,
+                                ...data.data.close
+                            }
+                        })
                     }
                 }
             }

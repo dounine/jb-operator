@@ -1,6 +1,17 @@
 <template>
   <el-row align="middle" type="flex" class="row">
     <el-col :span="2">
+      <span class="title">信息</span>
+    </el-col>
+    <el-col :span="21">
+      <span class="title" v-if="slider.close.profix">收益率：<span
+          :style="slider.close.profix.indexOf('-')===-1?'color:green':'color:red'">{{
+          slider.close.profix
+        }}%</span></span>
+    </el-col>
+  </el-row>
+  <el-row align="middle" type="flex" class="row">
+    <el-col :span="2">
       <span class="title">实时(u)</span>
     </el-col>
     <el-col :span="21">
