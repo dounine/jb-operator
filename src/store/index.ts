@@ -1,5 +1,4 @@
 import {createStore} from 'vuex'
-import position from '../api/position'
 import variables from './settings.js'
 
 export default createStore({
@@ -28,6 +27,7 @@ export default createStore({
             },
             close: {
                 profix: null,
+                profixRate: null,
                 config: null,
                 online: [],
                 rebound: 0,
@@ -140,76 +140,6 @@ export default createStore({
                         }
                     }
                 }
-                socket.onmessage = function (messageEvent) {
-                    console.log(messageEvent.data)
-                    const data = JSON.parse(messageEvent.data)
-                    if (data.type === "tip") {
-                        console.log(data.data)
-                    } else if (data.type === "slider") {
-                        if (data.data.type === "config") {
-                            const sliderConfig: API.SliderConfig = data.data;
-                            store.commit('setSlider', {
-                                ...store.state.slider,
-                                [sliderConfig.data.offset]: {
-                                    ...store.state.slider[sliderConfig.data.offset],
-                                    config: sliderConfig.data
-                                }
-                            })
-                        } else if (data.data.type === "online") {
-                            const online: API.SliderOnline = data.data;
-                            store.commit('setSlider', {
-                                ...store.state.slider,
-                                [online.data.offset]: {
-                                    ...store.state.slider[online.data.offset],
-                                    tradeValue: Number(online.data.tradeValue) || store.state.slider[online.data.offset].tradeValue,
-                                    initPrice: Number(online.data.initPrice) || store.state.slider[online.data.offset].initPrice,
-                                    online: [
-                                        Number(online.data.tradeValue) || store.state.slider[online.data.offset].tradeValue || Number(online.data.entrustValue),
-                                        Number(online.data.entrustValue) || store.state.slider[online.data.offset].entrustValue || Number(online.data.tradeValue)
-                                    ],
-                                    entrustValue: Number(online.data.entrustValue) || store.state.slider[online.data.offset].entrustValue,
-                                }
-                            })
-                        }
-                    } else if (data.type === "upDownInfo") {
-                        if (data.data.status) {
-                            store.commit('setStatus', data.data.status);
-                            if (data.data.status == 'Closed' || data.data.status == 'Stoped') {
-                                store.commit('setSlider', {
-                                    ...store.state.slider,
-                                    open: {
-                                        ...store.state.slider.open,
-                                        entrustValue: null,
-                                        online: [
-                                            store.state.slider.open.tradeValue,
-                                            store.state.slider.open.tradeValue
-                                        ],
-                                    },
-                                    close: {
-                                        ...store.state.slider.close,
-                                        entrustValue: null,
-                                        online: [
-                                            store.state.slider.close.tradeValue,
-                                            store.state.slider.close.tradeValue
-                                        ],
-                                    }
-
-                                })
-                            }
-                        }
-                        store.commit('setSlider', {
-                            ...store.state.slider,
-                            open: {
-                                ...store.state.slider.open,
-                                ...data.data.open
-                            },
-                            close: {
-                                ...store.state.slider.close,
-                                ...data.data.close
-                            }
-                        })
-                    }
-                }
             }
 
             if (!store.state.socket) {
@@ -218,19 +148,6 @@ export default createStore({
                 sendMessage(store.state.socket, payload)
             }
         },
-        queryPositions({commit}, payload) {
-            position.query(payload.platform)
-                .then(response => {
-                    const convertPositions = response.data.data.map(item => {
-                        return {
-                            ...item,
-                            icon: require(`../assets/images/${item.name}.svg`),
-                        };
-                    });
-                    commit('setPositions', convertPositions)
-                    commit('setLoading', false)
-                })
-        }
     },
     modules: {},
     getters: {}

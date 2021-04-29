@@ -1,6 +1,8 @@
 const port = 8082
-const { name } = require('./package.json')
+const {name} = require('./package.json')
 module.exports = {
+    // 生产环境不生成css跟js对应的map文件
+    productionSourceMap: false,
     devServer: {
         hot: true,
         port,
